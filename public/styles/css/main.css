@@ -102,3 +102,13 @@ body {
   background-color: #2e88bf;
   padding: 5px 10px;
 }
+
+ul {
+  list-style-type: none;
+}
+
+ul li.message .message__title h4 {
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
