@@ -5,18 +5,41 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Chat</title>
+	<!-- <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&amp;subset=cyrillic" rel="stylesheet"> -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700&amp;subset=cyrillic" rel="stylesheet">
+	<link rel="stylesheet" href="styles/css/main.css">
 </head>
 <body>
-	<p>Welcome to the chat app.</p>
-
-	<form id="message-form">
-		<input type="text" name="message" placeholder="message" id="message">
-		<button type="submit" id="submit-btn">Submit</button>
-	</form>
-
-	<button id="send-location">Send location</button>
-
+	<div class="top__container">
+			<div class="chat__sidebar">
+				<div class="inner__container">
+						<h3>People</h3>
+						<div class="users">
+							Vladyslav
+						</div>
+				</div>
+				</div>
+			
+				<div class="chat__right">
+						<div class="chat__main">
+								<ol class="chat__messages" id="messages"></ol>
+						</div>
+						
+							<div class="chat__footer">
+								<form id="message-form">
+									<input type="text" name="message" placeholder="Message" id="message">
+									<div class="button__wrap">
+										<button type="submit" id="submit-btn">Submit</button>
+										<button id="send-location">Send location</button>
+									</div>
+								</form>
+				</div>
+				
+				</div>
+	</div>
+	
 	<script src="/socket.io/socket.io.js"></script>
+	<script src="libs/moment.js"></script>
 	<script src="main.js"></script>
 </body>
 </html>

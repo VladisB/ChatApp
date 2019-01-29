@@ -1,0 +1,72 @@
+$blue : #29476d
+$blue2 : #2e88bf
+$grey: #e7e8eb
+$grey2: #73716c
+// $font : 'Roboto', sans-serif
+$font : 'Roboto Condensed', sans-serif
+
+body
+	margin: 0
+	padding: 0
+	font-family: $font
+	height: 100vh
+.top__container
+	display: flex
+	height: 100%
+.chat__sidebar
+	background-color: $blue
+	color: white
+	width: 20%
+	// height: 100%
+	.inner__container
+		padding-left: 20%
+		padding-top: 10%
+	h3
+		font-size: 20px
+		margin: 0
+		margin-bottom: 20px
+		padding: 0
+.chat__right
+	width: 80%
+	display: flex
+	flex-direction: column
+	// align-items: flex-end
+	// flex-wrap: wrap
+	.chat__main,
+	.chat__footer
+		width: 100%
+	.chat_footer
+		height: 58px
+	.chat__main
+		flex-grow: 1
+.chat__footer
+	// outline: 1px red solid
+	// display: flex
+	form
+		background-color: $grey
+		display: flex
+		padding: 8px
+	input
+		font-size: 16px
+		width: 85%
+		line-height: 2
+		border: none
+		outline: none
+		padding: 5px
+		padding-left: 10px
+		margin-right: 10px
+	.button__wrap
+		width: 15%
+		display: flex
+		justify-content: space-around
+		button
+			background: none
+			border: none
+			text-shadow: none
+			box-shadow: none
+			color: white
+			font-weight: 400
+			background-color: $blue2
+			// margin-right: 10px
+			padding: 5px 10px
+
