@@ -57,6 +57,7 @@ socket.on('newMessage', (message) => {
 	// li.innerText = `${message.from} ${formattedTime} : ${message.text}`;
 
 	// document.querySelector('#messages').appendChild(li);
+	
 });
 socket.on('newLocationMessage', (message) => {
 	
