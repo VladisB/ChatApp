@@ -3,31 +3,57 @@ const express = require('express');
 const socketIO = require('socket.io');
 const http = require('http');
 const {generateMessage, generateLocationMessage} = require('./utils/message');
+const {isRealString} = require('./utils/isRealString');
+const {Users} = require('./utils/users');
 
 const publicPath = path.join(__dirname, '/../public');
 let app = express();
 let port = process.env.PORT || 3000;
 let server = http.createServer(app);
 let io = socketIO(server);
+let users = new Users();
 
 io.on('connection', (socket)=>{
 	console.log('A new user just connected');
 
-	socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app!')); 
+	socket.on('join', (params, callback) => {
+		if(!isRealString(params.name) || !isRealString(params.room)){
+			return callback('Name and room are required');
+		}
+		socket.join(params.room);
+		users.removeUser(socket.id);
+		users.addUser(socket.id, params.name, params.room);
 
-	socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined')); 
+		io.to(params.room).emit('updateUserList', users.getUserList(params.room));
 
+		socket.emit('newMessage', generateMessage('Admin', `Welcome to ${params.room}!`)); 
+		socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined')); 
+		callback();
+	});
 	socket.on('createMessage' , (message, callback) => {
-		console.log('Create message', message);			
-		io.emit('newMessage', generateMessage(message.from, message.text));
+		// console.log('Create message', message);		
+		let user = users.getUser(socket.id);
+		if(user && isRealString(message.text)){
+			io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
+		}	
 		callback('This is the server');
 	});
 	
 	socket.on('createLocationMessage' , (coords) => {
-		io.emit('newLocationMessage', generateLocationMessage(`Admin`, coords.lat, coords.lng))
+		let user = users.getUser(socket.id);
+		if(user && isRealString(message.text)){
+			io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.lat, coords.lng));
+		}	
 	});
 
 	socket.on('disconnect', ()=> {
+		let user = users.removeUser(socket.id);
+
+		if(user){
+			io.to(user.room).emit('updateUserList', users.getUserList(user.room));
+			io.to(user.room).emit('newMessage', generateMessage(`Admim`, `${user.name} has left ${user.room} chat room.`));
+		}
+		
 		console.log('User was disconnected');
 	});
 });
